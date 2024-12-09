@@ -12,26 +12,29 @@ const publicDirectoryPath = path.join(__dirname, "../public");
 
 app.use(express.static(publicDirectoryPath));
 
-//callback-ul primit o sa ruleze pentru fiecare user avut
 io.on("connection", (socket) => {
   console.log("new websocket connection");
-  //   socket.emit("countUpdated", count); //trimit un event de pe server si trebui sa-l primesc pe client ( chat.js )
-  //parametrul pe care il dau dupa numele eventului, devine accesibil eventului de pe client
-
-  //primesc eventul trimis de pe client
-  //incrementez count-ul si apoi il trimit inapoi
-  //   socket.on("increment", () => {
-  //     count++;
-  //     // socket.emit("countUpdated", count); //emite eventul doar catre un client, adica doar pentru 1 face update
-
-  //     //emite eventul pentru toti clientii
-  //     io.emit("countUpdated", count);
-  //   });
 
   socket.emit("message", "Welcome!");
 
-  socket.on("sendMessage", (message) => {
+  socket.broadcast.emit("message", "A new user has joined!");
+
+  socket.on("sendMessage", (message, callback) => {
     io.emit("message", message);
+    callback("Delivered");
+  });
+
+  socket.on("sendLocation", (coords, callback) => {
+    io.emit(
+      "message",
+      `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
+    );
+    callback();
+  });
+
+  //emite un event, care anunta cand un user se deconecteaza
+  socket.on("disconnect", () => {
+    io.emit("message", "a user has left...");
   });
 });
 
