@@ -4,18 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat App</title>
+    <link rel="stylesheet" href="" />
   </head>
   <body>
-    <h1>Chat app</h1>
-
-    <form id="message-form">
-      <input name="message" type="text" placeholder="Type your message..." />
-      <button id="send-message">Send</button>
-    </form>
-
-    <button id="send-location">Send Location</button>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/chat.js"></script>
+    <div>
+      <div>
+        <h1>Join</h1>
+        <form action="/chat.html">
+          <label for="">Display name</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Display name"
+            required
+          />
+          <label for="">Room</label>
+          <input type="text" name="room" placeholder="Room" required />
+          <button>Join</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

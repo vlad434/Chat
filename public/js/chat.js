@@ -4,9 +4,35 @@ const $messageForm = document.querySelector("#message-form");
 const $messageFormInput = $messageForm.querySelector("input");
 const $messageFormButton = $messageForm.querySelector("button");
 const $sendLocationButton = document.getElementById("send-location");
+const $messages = document.querySelector("#messages");
+const $locations = document.querySelector("#locations");
+
+//Templates
+const messageTemplate = document.querySelector("#message-template").innerHTML;
+const locationTemplate = document.querySelector("#location-template").innerHTML;
+
+//Options
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
 
 socket.on("message", (message) => {
-  console.log(message);
+  //al doilea parametru actualizeaza {{message}} din html cu mesajul primit din event
+  const html = Mustache.render(messageTemplate, {
+    username: message.username,
+    message: message.text,
+    createdAt: moment(message.createdAt).format("h:mm a"),
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
+});
+
+socket.on("locationMessage", (message) => {
+  const html = Mustache.render(locationTemplate, {
+    username: message.username,
+    url: message.url,
+    createdAt: moment(message.createdAt).format("h:mm a"),
+  });
+  $locations.insertAdjacentHTML("beforeend", html);
 });
 
 $messageForm.addEventListener("submit", (e) => {
@@ -25,8 +51,6 @@ $messageForm.addEventListener("submit", (e) => {
     if (error) {
       return console.log(error);
     }
-
-    console.log("The message was delivered", error);
   });
 });
 
@@ -50,4 +74,11 @@ $sendLocationButton.addEventListener("click", () => {
       }
     );
   });
+});
+
+socket.emit("join", { username, room }, (error) => {
+  if (error) {
+    alert(error);
+    location.href = "/";
+  }
 });
