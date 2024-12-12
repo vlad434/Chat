@@ -7,24 +7,29 @@
     <link rel="stylesheet" href="" />
   </head>
   <body>
-    <h1>Chat app</h1>
+    <div class="chat">
+      <div id="sidebar" class="chat__sidebar"></div>
 
-    <div id="messages"></div>
-    <div id="locations"></div>
+      <div>
+        <div id="messages"></div>
+        <div id="locations"></div>
 
-    <form id="message-form">
-      <input
-        name="message"
-        type="text"
-        placeholder="Type your message..."
-        autocomplete="off"
-        required
-      />
-      <button id="send-message">Send</button>
-    </form>
+        <div>
+          <form id="message-form">
+            <input
+              name="message"
+              type="text"
+              placeholder="Type your message..."
+              autocomplete="off"
+              required
+            />
+            <button id="send-message">Send</button>
+          </form>
 
-    <button id="send-location">Send Location</button>
-
+          <button id="send-location">Send Location</button>
+        </div>
+      </div>
+    </div>
     <script id="message-template" type="text/html">
       <div>
         <p>{{username}}</p>
@@ -42,6 +47,17 @@
           <a href="{{url}}" target="_blank">My Current Location</a>
         </p>
       </div>
+    </script>
+
+    <script id="sidebar-template" type="text/html">
+      <h2>{{room}}</h2>
+      <h3>Users</h3>
+      <ul>
+        <!-- foreach kind of -->
+        {{#users}}
+        <li>{{username}}</li>
+        {{/users}}
+      </ul>
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
