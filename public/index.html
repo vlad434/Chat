@@ -4,25 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat App</title>
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <div>
-      <div>
-        <h1>Join</h1>
-        <form action="/chat.html">
-          <label for="">Display name</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Display name"
-            required
-          />
-          <label for="">Room</label>
-          <input type="text" name="room" placeholder="Room" required />
-          <button>Join</button>
-        </form>
-      </div>
+    <div class="container">
+      <h1>Join</h1>
+      <form action="/chat.html" class="form">
+        <label for="username">Display name</label>
+        <input
+          class="input"
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Display name"
+          autocomplete="off"
+          required
+        />
+        <label for="room">Room</label>
+        <input
+          class="input"
+          type="text"
+          name="room"
+          id="room"
+          placeholder="Room"
+          required
+        />
+        <button class="button">Join</button>
+      </form>
     </div>
   </body>
 </html>
